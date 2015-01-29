@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,10 +16,12 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
+#include <stdexcept>
+#include <stdlib.h>
 #include <math.h>
 #include "frequencyTest.h"
 
@@ -28,7 +30,7 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
 
 	// Random Test Class enumerator name
@@ -36,28 +38,28 @@ namespace DiceLockSecurity {
 	// Random Test Class minimum stream length
 	const unsigned int	FrequencyTest::minimumLength = 100;
 
-	// Constructor, default
+	// Constructor, default 
 	FrequencyTest::FrequencyTest() {
 
-		sum = 0;
-		sumDiv_n = 0.0;
+		this->sum = 0;
+		this->sumDiv_n = 0.0;
 	}
 
 
-	// Constructor with a MathematicalFunctions object instantiated
+	// Constructor with a MathematicalFunctions object instantiated 
 	FrequencyTest::FrequencyTest(MathematicalFunctions* mathFuncObj) {
 
-		sum = 0;
-		sumDiv_n = 0.0;
+		this->sum = 0;
+		this->sumDiv_n = 0.0;
 	}
 
 	// Destructor
 	FrequencyTest::~FrequencyTest() {
 
-		sum = 0;
-		sumDiv_n = 0.0;
+		this->sum = 0;
+		this->sumDiv_n = 0.0;
 	}
-
+	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 	bool FrequencyTest::IsRandom(void) {
 
@@ -86,7 +88,7 @@ namespace DiceLockSecurity {
 		s_obs = fabs(sum)/sqrt((double)bitStream->GetBitLength());
 		f = s_obs/sqrt2;
 		this->pValue = this->mathFuncs->ErFc(f);
-		if (this->pValue < this->GetAlpha()) {
+		if (this->pValue < this->GetAlpha()) { 
 			this->random = false;
 		}
 		else {
@@ -101,8 +103,8 @@ namespace DiceLockSecurity {
 	void FrequencyTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		sum = 0;
-		sumDiv_n = 0.0;
+		this->sum = 0;
+		this->sumDiv_n = 0.0;
 	}
 
 	// Gets the type of the object

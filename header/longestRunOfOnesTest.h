@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,14 +16,13 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #ifndef LONGESTRUNOFONES_HPP
 
 #define LONGESTRUNOFONES_HPP
-
 
 #include "baseRandomTest.h"
 #include "mathematicalFunctions.h"
@@ -37,12 +36,12 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
+			/// Random Test Class minimum stream length
 			static const unsigned int	minimumLength;
 
-			// Random Test Class block sizes and minimum lengths
+			/// Random Test block sizes and minimum lengths
 			struct blockSizeMinimumLength {
 				int blockSize;
 				int minimumLength;
@@ -50,61 +49,61 @@ namespace DiceLockSecurity {
 			static const short	numberBlockSizes;
 			static const blockSizeMinimumLength	blockSizes[3];
 
-			static const int NumAssignments;	// 7
+			static const int NumAssignments;	// 7 
 			int          longRunCase;
 			int          substringNumber;
 			int          substringLength;
 			double       chiSquared;
 			unsigned int *assignment;
-
+			
 		public:
 
-			// Constructor, default
+			/// Constructor, default 
 			LongestRunOfOnesTest();
 
-			// Constructor, setting longRunCase
+			/// Constructor, setting longRunCase 
 			LongestRunOfOnesTest(int);
 
-			// Constructor with a MathematicalFunctions object instantiated
+			/// Constructor with a MathematicalFunctions object instantiated 
 			LongestRunOfOnesTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			~LongestRunOfOnesTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			RandomTests GetType(void);
 
-			// Gets the minimum random stream length
+			/// Gets the minimum random stream length
 			unsigned int GetMinimumLength(void);
 
-			// Sets the longRunCase parameter
+			/// Sets the longRunCase parameter 
 			void SetLongRunCase(int);
 
-			// Gets the longRunCase parameter
+			/// Gets the longRunCase parameter 
 			int GetLongRunCase(void);
 
-			// Gets the "substringNumber" result
+			/// Gets the "substringNumber" result 
 			int GetSubstringNumber(void);
 
-			// Gets the "substringLength" result
+			/// Gets the "substringLength" result
 			int GetSubstringLength(void);
 
-			// Gets the chiSquared result
+			/// Gets the chiSquared result
 			double GetChiSquared(void);
 
-			// Gets the Assignment result
+			/// Gets the Assignment result
 			void GetAssignment(unsigned int *);
 
-			// Gets the Assignment result based on the index
+			/// Gets the Assignment result based on the index
 			unsigned int GetAssignmentOfIndex(int);
 	};
   }

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,12 +16,14 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
+#include <memory.h>
 #include "longestRunOfOnesTest.h"
 
 
@@ -29,7 +31,7 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
 
 	// Random Test Class enumerator name
@@ -41,52 +43,52 @@ namespace DiceLockSecurity {
 	const short	LongestRunOfOnesTest::numberBlockSizes = 3;
 	const LongestRunOfOnesTest::blockSizeMinimumLength LongestRunOfOnesTest::blockSizes[] = {{8, 128}, {128, 6272}, {10000, 750000}};
 
-	const int LongestRunOfOnesTest::NumAssignments = 7;
+	const int LongestRunOfOnesTest::NumAssignments = 7;	
 
-	// Constructor, default
+	// Constructor, default 
 	LongestRunOfOnesTest::LongestRunOfOnesTest() {
 
-		longRunCase = 0;
-		substringNumber = 0;
-		substringLength = 0;
-		chiSquared = 0.0;
-		assignment = (unsigned int*)calloc(NumAssignments, sizeof(unsigned int));
-		if (assignment == NULL) {
+		this->longRunCase = 0;
+		this->substringNumber = 0;
+		this->substringLength = 0;
+		this->chiSquared = 0.0;
+		this->assignment = (unsigned int*)calloc(NumAssignments, sizeof(unsigned int));
+		if (this->assignment == NULL) {
 			this->error = InsufficientMemory;
 		}
 		else {
-			memset(assignment, 0, sizeof(unsigned int)*NumAssignments);
+			memset(this->assignment, 0, sizeof(unsigned int)*NumAssignments);
 		}
 	}
 
 
-	// Constructor with a MathematicalFunctions object instantiated
+	// Constructor with a MathematicalFunctions object instantiated 
 	LongestRunOfOnesTest::LongestRunOfOnesTest(MathematicalFunctions* mathFuncObj) {
 
-		longRunCase = 0;
-		substringNumber = 0;
-		substringLength = 0;
-		chiSquared = 0.0;
-		assignment = (unsigned int*)calloc(NumAssignments, sizeof(unsigned int));
-		if (assignment == NULL) {
+		this->longRunCase = 0;
+		this->substringNumber = 0;
+		this->substringLength = 0;
+		this->chiSquared = 0.0;
+		this->assignment = (unsigned int*)calloc(NumAssignments, sizeof(unsigned int));
+		if (this->assignment == NULL) {
 			this->error = InsufficientMemory;
 		}
 		else {
-			memset(assignment, 0, sizeof(unsigned int)*NumAssignments);
+			memset(this->assignment, 0, sizeof(unsigned int)*NumAssignments);
 		}
 	}
 
 	// Destructor
 	LongestRunOfOnesTest::~LongestRunOfOnesTest() {
 
-		longRunCase = 0;
-		substringNumber = 0;
-		substringLength = 0;
-		chiSquared = 0.0;
-		memset(assignment, 0, sizeof(unsigned int)*NumAssignments);
-		free(assignment);
+		this->longRunCase = 0;
+		this->substringNumber = 0;
+		this->substringLength = 0;
+		this->chiSquared = 0.0;
+		memset(this->assignment, 0, sizeof(unsigned int)*NumAssignments);
+		free(this->assignment);
 	}
-
+	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 	bool LongestRunOfOnesTest::IsRandom(void) {
 
@@ -155,7 +157,7 @@ namespace DiceLockSecurity {
 				k[6] = 16;
 			}
 		}
-
+	  
 		this->error = NoError;
 		this->substringNumber = (int)floor((long double)(bitStream->GetBitLength()/substringLength));
 		bitStream->SetBitPosition(0);
@@ -165,7 +167,7 @@ namespace DiceLockSecurity {
 			for(j = 0; j < substringLength; j++) {
 				if ((int)bitStream->GetBitPosition(i * substringLength + j) == 1) {
 					run++;
-					v_n_obs = MAX(v_n_obs, run);
+					v_n_obs = MAX(v_n_obs, run); 
 				}
 				else {
 					run = 0.e0;
@@ -183,7 +185,7 @@ namespace DiceLockSecurity {
 				nu[K]++;
 			}
 		}
-		this->chiSquared = 0.0;
+		this->chiSquared = 0.0;					
 		for(i = 0; i <= K; i++) {
 			this->chiSquared += (((double)nu[i] - (double)this->substringNumber * pi[i]) * (nu[i] - (double)this->substringNumber * pi[i])) / ((double)this->substringNumber * pi[i]);
 		}
@@ -193,7 +195,7 @@ namespace DiceLockSecurity {
 			this->random = false;
 		}
 		else {
-			if (this->pValue < this->alpha) {
+			if (this->pValue < this->alpha) {     
 				this->random = false;
 			}
 			else {
@@ -209,11 +211,11 @@ namespace DiceLockSecurity {
 	void LongestRunOfOnesTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		longRunCase = 0;
-		substringNumber = 0;
-		substringLength = 0;
-		chiSquared = 0.0;
-		memset( assignment, 0, sizeof(unsigned int)*NumAssignments);
+		this->longRunCase = 0;
+		this->substringNumber = 0;
+		this->substringLength = 0;
+		this->chiSquared = 0.0;
+		memset(this->assignment, 0, sizeof(unsigned int)*NumAssignments);
 	}
 
 	// Gets the type of the object
@@ -228,19 +230,19 @@ namespace DiceLockSecurity {
 		return this->minimumLength;
 	}
 
-	// Sets the longRunCase parameter
+	// Sets the longRunCase parameter 
 	void LongestRunOfOnesTest::SetLongRunCase(int run) {
 
-		longRunCase = run;
+		this->longRunCase = run;
 	}
 
-	// Gets the longRunCase parameter
+	// Gets the longRunCase parameter 
 	int LongestRunOfOnesTest::GetLongRunCase(void) {
 
 		return this->longRunCase;
 	}
 
-	// Gets the "substringNumber" result
+	// Gets the "substringNumber" result 
 	int LongestRunOfOnesTest::GetSubstringNumber(void) {
 
 		return this->substringNumber;
@@ -261,7 +263,7 @@ namespace DiceLockSecurity {
 	// Gets the Assignment result
 	void LongestRunOfOnesTest::GetAssignment(unsigned int *assign) {
 
-		memcpy (assign, assignment, sizeof(unsigned int)*NumAssignments);
+		memcpy(assign, this->assignment, sizeof(unsigned int)*NumAssignments);
 	}
 
 	// Gets the Assignment result based on the index

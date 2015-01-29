@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,11 +15,12 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
-
+#include <stdexcept>
+#include <stdlib.h>
 #include "randomTestSuite.h"
 
 
@@ -27,13 +28,13 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
 
 		// Points the first random test in the suite
 		const RandomTests RandomTestSuite::firstTest = Frequency;
 
-		// Constructor, default, initializes suite and instantiates MathematicalFunctions
+		// Constructor, default, initializes suite and instantiates MathematicalFunctions  
 		RandomTestSuite::RandomTestSuite() {
 			int i;
 
@@ -92,7 +93,7 @@ namespace DiceLockSecurity {
 		}
 
 		// ADDING RANDOM TESTS
-
+			
 		// Adds a random test to the suite
 		void RandomTestSuite::Add(BaseRandomTest* test) {
 
@@ -107,67 +108,67 @@ namespace DiceLockSecurity {
 		void RandomTestSuite::Add(RandomTests test) {
 
 			switch (test) {
-				case Frequency:
+				case Frequency: 
 					if (this->suite[Frequency] == NULL) {
 						this->suite[Frequency] = new FrequencyTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case BlockFrequency:
+				case BlockFrequency: 
 					if (this->suite[BlockFrequency] == NULL) {
 						this->suite[BlockFrequency] = new BlockFrequencyTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case Runs:
+				case Runs: 
 					if (this->suite[Runs] == NULL) {
 						this->suite[Runs] = new RunsTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case LongestRunOfOnes:
+				case LongestRunOfOnes: 
 					if (this->suite[LongestRunOfOnes] == NULL) {
 						this->suite[LongestRunOfOnes] = new LongestRunOfOnesTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case CumulativeSumForward:
+				case CumulativeSumForward: 
 					if (this->suite[CumulativeSumForward] == NULL) {
 						this->suite[CumulativeSumForward] = new CumulativeSumForwardTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case CumulativeSumReverse:
+				case CumulativeSumReverse: 
 					if (this->suite[CumulativeSumReverse] == NULL) {
 						this->suite[CumulativeSumReverse] = new CumulativeSumReverseTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case Rank:
+				case Rank: 
 					if (this->suite[Rank] == NULL) {
 						this->suite[Rank] = new RankTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case Universal:
+				case Universal: 
 					if (this->suite[Universal] == NULL) {
 						this->suite[Universal] = new UniversalTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case ApproximateEntropy:
+				case ApproximateEntropy: 
 					if (this->suite[ApproximateEntropy] == NULL) {
 						this->suite[ApproximateEntropy] = new ApproximateEntropyTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case Serial:
+				case Serial: 
 					if (this->suite[Serial] == NULL) {
 						this->suite[Serial] = new SerialTest(this->mathFunctions);
 						this->instantiatedTests++;
 					}
 					break;
-				case DiscreteFourierTransform:
+				case DiscreteFourierTransform: 
 					if (this->suite[DiscreteFourierTransform] == NULL) {
 						this->suite[DiscreteFourierTransform] = new DiscreteFourierTransformTest(this->mathFunctions);
 						this->instantiatedTests++;
@@ -179,7 +180,7 @@ namespace DiceLockSecurity {
 			this->selfCreatedTest[test] = true;
 		}
 
-		// Creates and adds all random tests to the suite
+		// Creates and adds all random tests to the suite 
 		void RandomTestSuite::AddAll(void) {
 			int i;
 
@@ -290,7 +291,7 @@ namespace DiceLockSecurity {
 		}
 
 		// GETTING RANDOM TESTS
-
+			
 		// Gets a random test to the suite based in the enumerated random tests
 		BaseRandomTest* RandomTestSuite::GetRandomTest(RandomTests test) {
 
@@ -393,7 +394,7 @@ namespace DiceLockSecurity {
 			}
 		}
 
-		// Removes all random test of the suite
+		// Removes all random test of the suite 
 		void RandomTestSuite::RemoveAll(void) {
 			int i;
 
@@ -557,9 +558,9 @@ namespace DiceLockSecurity {
 		// Tests the BaseCryptoRandomStream untill an error is found with all instantiated random tests and returns the random value
 		bool RandomTestSuite::IsRandom(BaseCryptoRandomStream* stream) {
 			int i;
-
+			
 			this->random = true;
-			i=this->GetFirstTest();
+			i = this->GetFirstTest();
 			while ((i < this->GetMaximumNumberOfTests()) && (this->random)) {
 				if (this->suite[i] != NULL) {
 					this->random &= this->suite[i]->IsRandom(stream);
@@ -577,16 +578,16 @@ namespace DiceLockSecurity {
 		// Tests the BaseCryptoRandomStream with all instantiated random tests and returns the random value
 		bool RandomTestSuite::TestRandom(BaseCryptoRandomStream* stream) {
 			int i;
-
+			
 			this->random = true;
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
 				if (this->suite[i] != NULL) {
 					this->random &= this->suite[i]->IsRandom(stream);
 					if (!(this->suite[i]->IsRandom())) {
 						if (this->suite[i]->GetError() != NoError) {
 							if (this->error == NoError)
 								this->error = this->suite[i]->GetError();
-							else
+							else 
 								if (this->error != this->suite[i]->GetError())
 									this->error = MultipleErrors;
 							numberOfErrors++;
@@ -598,12 +599,12 @@ namespace DiceLockSecurity {
 		}
 
 		// INITIALIZE SUITE
-
+			
 		// Initializes all random tests in the suite
 		void RandomTestSuite::Initialize(void) {
 			int i;
-
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			
+			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
 				if (this->suite[i] != NULL) {
 					this->suite[i]->Initialize();
 				}
@@ -635,6 +636,43 @@ namespace DiceLockSecurity {
 		int RandomTestSuite::GetInstantiatedTests(void) {
 
 			return this->instantiatedTests;
+		}
+
+		// Gets the minimum random stream length in bits corresponding
+		// to random number test with higher random stream length
+		unsigned int RandomTestSuite::GetMinimumLength(void) {
+			unsigned int minimumMax;
+			int i;
+
+			minimumMax = 0;
+			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
+				if ( this->Exist((RandomTests)i) ) {
+					if ( this->GetRandomTest((RandomTests)i)->GetMinimumLength() > minimumMax ) {
+						minimumMax = this->GetRandomTest((RandomTests)i)->GetMinimumLength();
+					}
+				}
+			}
+			return minimumMax;
+		}
+
+		// Gets the corresponding random number test 
+		// with higher minimum random stream length in bits 
+		RandomTests RandomTestSuite::GetMinimumLengthRandomTest(void) {
+			unsigned int minimumMax;
+			int i;
+			RandomTests randomTest;
+
+			minimumMax = 0;
+			randomTest = NotDefined;
+			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
+				if ( this->Exist((RandomTests)i) ) {
+					if ( this->GetRandomTest((RandomTests)i)->GetMinimumLength() > minimumMax ) {
+						minimumMax = this->GetRandomTest((RandomTests)i)->GetMinimumLength();
+						randomTest = (RandomTests)i;
+					}
+				}
+			}
+			return randomTest;
 		}
 
 		// Gets the failed random test in the RandomTestSuite

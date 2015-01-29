@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,14 +15,13 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #ifndef RANKTEST_HPP
 
 #define RANKTEST_HPP
-
 
 #include "baseRandomTest.h"
 #include "mathematicalFunctions.h"
@@ -36,92 +35,92 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
+			/// Random Test Class minimum stream length
 			static const unsigned int	minimumLength;
 
 			double  chiSquared;
 			int     matrixNumber;
 			int     bitsDiscarded;
-			double  p30, p31, p32;		 	// Probabilities
-			double	f30, f31, f32;			// Frequencies
+			double  p30, p31, p32;		 	/// Probabilities
+			double	f30, f31, f32;			/// Frequencies
 
-			// Create Matrix
+			/// Create Matrix 
 			unsigned char**	CreateMatrix(int, int);
 
-			// Define Matrix
+			/// Define Matrix 
 			void		DefineMatrix(BaseCryptoRandomStream*, int, int, unsigned char**, int);
 
-			// Deletes matrix
+			/// Deletes matrix 
 			void		DeleteMatrix(int, unsigned char**);
 
-			// Computes rank
+			/// Computes rank 
 			int			ComputeRank(int, int, unsigned char**);
 
-			// Perform Elementary Row Operations
+			/// Perform Elementary Row Operations
 			void		PerformElementaryRowOperations(int, int, int, int, unsigned char**);
 
-			// Find Unit Element And Swap
+			/// Find Unit Element And Swap
 			int			FindUnitElementAndSwap(int, int, int, int, unsigned char**);
 
-			// Swap Rows
+			/// Swap Rows 
 			int			SwapRows(int, int, int, unsigned char**);
 
-			// Determine Rank
+			/// Determine Rank 
 			int			DetermineRank(int, int, int, unsigned char**);
 
 		public:
 
-			// Constructor, default
+			/// Constructor, default 
 			RankTest();
 
-			// Constructor with a MathematicalFunctions object instantiated
+			/// Constructor with a MathematicalFunctions object instantiated 
 			RankTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			~RankTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			RandomTests GetType(void);
 
-			// Gets the minimum random stream length
+			/// Gets the minimum random stream length
 			unsigned int GetMinimumLength(void);
 
-			// Gets the "chiSquared" result
+			/// Gets the "chiSquared" result
 			double GetChiSquared(void);
 
-			// Gets the "matrixNumber" result
+			/// Gets the "matrixNumber" result
 			int GetMatrixNumber(void);
 
-			// Gets the "bitsDiscarded" result
+			/// Gets the "bitsDiscarded" result
 			int GetBitsDiscarded(void);
 
-			// Gets the "p30" result
+			/// Gets the "p30" result
 			double GetP30(void);
 
-			// Gets the "p31" result
+			/// Gets the "p31" result
 			double GetP31(void);
 
-			// Gets the "p32" result
+			/// Gets the "p32" result
 			double GetP32(void);
 
-			// Gets the "f30" result
+			/// Gets the "f30" result
 			double GetF30(void);
 
-			// Gets the "f31" result
+			/// Gets the "f31" result
 			double GetF31(void);
 
-			// Gets the "f32" result
+			/// Gets the "f32" result
 			double GetF32(void);
 
 	};

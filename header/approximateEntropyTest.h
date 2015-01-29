@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,14 +16,13 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #ifndef APPROXIMATEENTROPYTEST_HPP
 
 #define APPROXIMATEENTROPYTEST_HPP
-
 
 #include "baseRandomTest.h"
 #include "mathematicalFunctions.h"
@@ -37,9 +36,9 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
+			/// Random Test Class minimum stream length
 			static const unsigned int	minimumLength;
 
 			int     blockLength;
@@ -47,60 +46,60 @@ namespace DiceLockSecurity {
 			double	phi;
 			double	phiPlusOne;
 			double	apEn;
-			bool	blockSizeExceeded;
-			unsigned int	maximumBlockSizeRecommended;
+			bool	blockSizeExceeded;		
+			unsigned int	maximumBlockSizeRecommended;	 
 
 		public:
 
-			// Constructor, default
+			/// Constructor, default 
 			ApproximateEntropyTest();
 
-			// Constructor with a MathematicalFunctions object instantiated
+			/// Constructor with a MathematicalFunctions object instantiated 
 			ApproximateEntropyTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			~ApproximateEntropyTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			bool IsRandom(void);
 
-			// Tests the BaseCryptoRandomStream executed and returns the random value
+			/// Tests the BaseCryptoRandomStream executed and returns the random value
 			bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			RandomTests GetType(void);
 
-			// Gets the minimum random stream length
+			/// Gets the minimum random stream length
 			unsigned int GetMinimumLength(void);
 
-			// Sets the "m" parameter
+			/// Sets the "m" parameter
 			void SetBlockLength(int);
 
-			// Gets the "m" parameter
+			/// Gets the "m" parameter
 			int GetBlockLength(void);
 
-			// Gets the "ChiSquared" result
+			/// Gets the "ChiSquared" result
 			double GetChiSquared(void);
 
-			// Gets the "Phi" result
+			/// Gets the "Phi" result
 			double GetPhi(void);
 
-			// Gets the "PhiPlusOne" result
+			/// Gets the "PhiPlusOne" result
 			double GetPhiPlusOne(void);
 
-			// Gets the "apEn" result
+			/// Gets the "apEn" result
 			double GetApEn(void);
 
-			// Gets the "BlockSizeExceeded" result
-			bool GetBlockSizeExceeded(void);
+			/// Gets the "BlockSizeExceeded" result
+			bool GetBlockSizeExceeded(void);		
 
-			// Gets the "BlockSizeRecommended" result
-			unsigned int GetMaximumBlockSizeRecommended(void);
+			/// Gets the "BlockSizeRecommended" result
+			unsigned int GetMaximumBlockSizeRecommended(void);	 
 
-			// Gets the "BlockSizeRecommended" for the indicated stream length
+			/// Gets the "BlockSizeRecommended" for the indicated stream length
 			unsigned int MaximumBlockSizeRecommended(unsigned int);
 	};
   }

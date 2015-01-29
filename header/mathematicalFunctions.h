@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,14 +15,13 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #ifndef MATHEMATICALFUNCTIONS_HPP
 
 #define MATHEMATICALFUNCTIONS_HPP
-
 
 #define MAX(x,y)             ((x) <  (y)  ? (y)  : (x))
 #define MIN(x,y)             ((x) >  (y)  ? (y)  : (x))
@@ -46,14 +45,14 @@ namespace DiceLockSecurity {
 
 	  class MathematicalFunctions {
 
-	   private:
-
-		static const double MACHEP;	// 2**-53
-		static const double MAXLOG;		// log(MAXNUM)
-		static const double MAXNUM;    // 2**1024*(1-MACHEP)
+	   private: 
+		
+		static const double MACHEP;	// 2**-53 
+		static const double MAXLOG;	// log(MAXNUM) 
+		static const double MAXNUM; // 2**1024*(1-MACHEP) 
 		static const double PI;		// pi
-		static const double LOGPI;			// log(pi)
-		static const double LS2PI;		//( log( sqrt( 2*pi ) )
+		static const double LOGPI;	// log(pi) 
+		static const double LS2PI;	//( log( sqrt( 2*pi ) ) 
 		static const double big;
 		static const double biginv;
 		// A[]: Stirling's formula expansion of log gamma
@@ -62,49 +61,49 @@ namespace DiceLockSecurity {
 		static double B_lgam[];
 		static double C_lgam[];
 		static const double MAXLGM;
-
+	   
 	   protected:
-
+		
 		bool Error;
 		MathematicalErrors MathError;
 
 	   public:
 
-			// Constructor, default
+			/// Constructor, default 
 			MathematicalFunctions();
 
-			// Destructor
+			/// Destructor
 			~MathematicalFunctions();
 
-			// Logarithm of gamma function
+			/// Logarithm of gamma function
 			double	LGamma(double);
 
-			// incomplete gamma function
+			/// incomplete gamma function
 			double	IGamma(double, double);
-
-			// Complemented incomplete gamma integral
+			
+			/// Complemented incomplete gamma integral
 			double	IGammaC(double, double);
 
-			// Evaluate polynomial of degree N
+			/// Evaluate polynomial of degree N
 			double	PolEvl(double,double *, int);
-
-			//                                          N
-			// Evaluate polynomial when coefficient of x  is 1.0.
+			
+			///                                          N
+			/// Evaluate polynomial when coefficient of x  is 1.0.
 			double	P1Evl(double, double *, int);
-
-			// Error function in double precision
+			
+			/// Error function in double precision 
 			double	ErF(double);
-
-			// Error function in double precision
+			
+			/// Error function in double precision 
 			double	ErFc(double);
-
-			// Statistical Normal function
+			
+			/// Statistical Normal function
 			double	 Normal(double);
-
-			// Class common error handling member
+			
+			/// Class common error handling member
 			int		GetError();
 
-			// Class common error handling member
+			/// Class common error handling member
 			MathematicalErrors GetMathError();
 	  };
   }

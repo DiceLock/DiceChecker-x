@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,9 +16,9 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #include <stdexcept>
 #include <stdlib.h>
@@ -29,9 +29,9 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
-
+	
 	// Constructor
 	BaseRandomTest::BaseRandomTest() {
 
@@ -49,11 +49,11 @@ namespace DiceLockSecurity {
 		this->random = false;
 	}
 
-	// Constructor with a MathematicalFunctions object instantiated
+	// Constructor with a MathematicalFunctions object instantiated 
 	BaseRandomTest::BaseRandomTest(MathematicalFunctions* mathFuncObj) {
 
 		this->error = NoError;
-		if (mathFuncObj != NULL) {
+		if (mathFuncObj != NULL) { 
 			mathFuncs = mathFuncObj;
 			this->autoMathFunc = false;
 		}
@@ -96,13 +96,13 @@ namespace DiceLockSecurity {
 	// Gets the BaseRandomTest alpha margin
 	double BaseRandomTest::GetAlpha(void) {
 
-		return this->alpha;
+		return this->alpha; 
 	}
 
 	// Gets the BaseRandomTest pValue
 	double BaseRandomTest::GetPValue(void) {
 
-		return this->pValue;
+		return this->pValue; 
 	}
 
 	// Gets the BaseRandomTest error of the last executed BaseCryptoRandomStream

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,9 +16,9 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #include <stdexcept>
 #include <stdlib.h>
@@ -33,12 +33,12 @@ namespace DiceLockSecurity {
 
   namespace RandomTest {
 
-		const double MathematicalFunctions::MACHEP =  1.11022302462515654042E-16;	// 2**-53
-		const double MathematicalFunctions::MAXLOG =  7.09782712893383996732E2;		// log(MAXNUM)
-		const double MathematicalFunctions::MAXNUM =  1.79769313486231570815E308;    // 2**1024*(1-MACHEP)
+		const double MathematicalFunctions::MACHEP =  1.11022302462515654042E-16;	// 2**-53 
+		const double MathematicalFunctions::MAXLOG =  7.09782712893383996732E2;		// log(MAXNUM) 
+		const double MathematicalFunctions::MAXNUM =  1.79769313486231570815E308;    // 2**1024*(1-MACHEP) 
 		const double MathematicalFunctions::PI     =  3.14159265358979323846;		// pi
-		const double MathematicalFunctions::LOGPI = 1.14472988584940017414;			// log(pi)
-		const double MathematicalFunctions::LS2PI  =  0.91893853320467274178;		//( log( sqrt( 2*pi ) )
+		const double MathematicalFunctions::LOGPI = 1.14472988584940017414;			// log(pi) 
+		const double MathematicalFunctions::LS2PI  =  0.91893853320467274178;		//( log( sqrt( 2*pi ) ) 
 		const double MathematicalFunctions::big = 4.503599627370496e15;
 		const double MathematicalFunctions::biginv =  2.22044604925031308085e-16;
 		// A[]: Stirling's formula expansion of log gamma
@@ -269,8 +269,8 @@ namespace DiceLockSecurity {
 			while (--i);
 			return (ans);
 		}
-
-		// Error function in double precision
+			
+		// Error function in double precision 
 		double MathematicalFunctions::ErF(double x) {
 			static const double two_sqrtpi = 1.128379167095512574;
 			static const double	rel_error = 1E-12;
@@ -289,8 +289,8 @@ namespace DiceLockSecurity {
 			} while ( fabs(term)/sum > rel_error );
 			return two_sqrtpi*sum;
 		}
-
-		// Error function in double precision
+			
+		// Error function in double precision 
 		double MathematicalFunctions::ErFc(double x) {
 			static const double one_sqrtpi = 0.564189583547756287;
 			static const double	rel_error = 1E-12;
@@ -322,7 +322,7 @@ namespace DiceLockSecurity {
 			if (x > 0) {
 				arg = x/sqrt2;
 				result = 0.5 * ( 1 + this->ErF(arg) );
-			}
+			}	
 			else {
 				arg = -x/sqrt2;
 				result = 0.5 * ( 1 - this->ErF(arg) );

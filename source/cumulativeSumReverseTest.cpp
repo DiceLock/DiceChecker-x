@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,10 +16,12 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
+#include <stdexcept>
+#include <stdlib.h>
 #include <math.h>
 #include "cumulativeSumReverseTest.h"
 
@@ -28,7 +30,7 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
 
 	// Random Test Class enumerator name
@@ -36,23 +38,23 @@ namespace DiceLockSecurity {
 	// Random Test Class minimum stream length
 	const unsigned int	CumulativeSumReverseTest::minimumLength = 100;
 
-	// Constructor, default
+	// Constructor, default 
 	CumulativeSumReverseTest::CumulativeSumReverseTest() {
 
-		cuSum = 0;
+		this->cuSum = 0;
 	}
 
 
-	// Constructor with a MathematicalFunctions object instantiated
+	// Constructor with a MathematicalFunctions object instantiated 
 	CumulativeSumReverseTest::CumulativeSumReverseTest(MathematicalFunctions* mathFuncObj) {
 
-		cuSum = 0;
+		this->cuSum = 0;
 	}
 
 	// Destructor
 	CumulativeSumReverseTest::~CumulativeSumReverseTest() {
 
-		cuSum = 0;
+		this->cuSum = 0;
 	}
 
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -65,7 +67,7 @@ namespace DiceLockSecurity {
 	bool CumulativeSumReverseTest::IsRandom(BaseCryptoRandomStream* bitStream) {
 		int    i, k, start, finish;
 		double z, sum, sum1, sum2;
-
+ 
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
 			this->random = false;
@@ -93,14 +95,14 @@ namespace DiceLockSecurity {
 		this->pValue = 1.0 - sum1 + sum2;
 		if (isNegative(this->pValue) || isGreaterThanOne(this->pValue)) {
 			this->error = PValueOutOfRange;
-    		this->random = false;
+    		this->random = false; 
 		}
 		else {
-			if (this->pValue < this->alpha) {
-        		this->random = false;
+			if (this->pValue < this->alpha) { 
+        		this->random = false; 
 			}
 			else {
-				this->random = true;
+				this->random = true; 
 			}
 		}
 		return this->random;
@@ -110,7 +112,7 @@ namespace DiceLockSecurity {
 	void CumulativeSumReverseTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		cuSum = 0;
+		this->cuSum = 0;
 	}
 
 	// Gets the type of the object

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,10 +16,11 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
+#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include "discreteFourierTransformTest.h"
@@ -29,7 +30,7 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
 
 		// Random Test Class enumerator name
@@ -41,32 +42,32 @@ namespace DiceLockSecurity {
 	const double DiscreteFourierTransformTest::tpi = 6.28318530717958647692528676655900577;
 	const double DiscreteFourierTransformTest::hsqt2 = 0.70710678118654752440084436210485;
 
-	// Constructor, default
+	// Constructor, default 
 	DiscreteFourierTransformTest::DiscreteFourierTransformTest() {
 
-		percentile = 0.0;
-		observedPeaks = 0.0;
-		expectedPeaks = 0.0;
-		normalizedDifference = 0.0;
+		this->percentile = 0.0;
+		this->observedPeaks = 0.0;
+		this->expectedPeaks = 0.0;
+		this->normalizedDifference = 0.0;
 	}
 
 
-	// Constructor with a MathematicalFunctions object instantiated
+	// Constructor with a MathematicalFunctions object instantiated 
 	DiscreteFourierTransformTest::DiscreteFourierTransformTest(MathematicalFunctions* mathFuncObj) {
 
-		percentile = 0.0;
-		observedPeaks = 0.0;
-		expectedPeaks = 0.0;
-		normalizedDifference = 0.0;
+		this->percentile = 0.0;
+		this->observedPeaks = 0.0;
+		this->expectedPeaks = 0.0;
+		this->normalizedDifference = 0.0;
 	}
 
 	// Destructor
 	DiscreteFourierTransformTest::~DiscreteFourierTransformTest() {
 
-		percentile = 0.0;
-		observedPeaks = 0.0;
-		expectedPeaks = 0.0;
-		normalizedDifference = 0.0;
+		this->percentile = 0.0;
+		this->observedPeaks = 0.0;
+		this->expectedPeaks = 0.0;
+		this->normalizedDifference = 0.0;
 	}
 
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -82,7 +83,7 @@ namespace DiceLockSecurity {
 		int      i, count;
 		double	 *wsave;
 		int      *ifac;
-
+	
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
 			this->random = false;
@@ -106,11 +107,11 @@ namespace DiceLockSecurity {
 				X[i] = 2*(int)bitStream->GetBitPosition(i) - 1;
 			this->drfti1(bitStream->GetBitLength(), wsave + bitStream->GetBitLength(), ifac);
 			this->drftf1(bitStream->GetBitLength(),X,wsave,wsave+bitStream->GetBitLength(),ifac);
-			m[0] = sqrt(X[0] * X[0]);
+			m[0] = sqrt(X[0] * X[0]);	    
 			for (i = 0; i < (int)bitStream->GetBitLength()/2; i++) {
-				m[i+1] = sqrt(pow(X[2*i+1], 2) + pow(X[2*i + 2], 2));
+				m[i+1] = sqrt(pow(X[2*i+1], 2) + pow(X[2*i + 2], 2)); 
 			}
-			count = 0;
+			count = 0;				       
 			upperBound = sqrt(2.995732274 * bitStream->GetBitLength());
 			for (i = 0; i < (int)bitStream->GetBitLength()/2; i++) {
 				if (m[i] < upperBound) {
@@ -118,11 +119,11 @@ namespace DiceLockSecurity {
 				}
 			}
 			this->percentile = (double)count/(bitStream->GetBitLength()/2) * 100;
-			this->observedPeaks = (double) count;
+			this->observedPeaks = (double) count;       
 			this->expectedPeaks = (double) 0.95 * bitStream->GetBitLength()/2.0;
 			this->normalizedDifference = (this->observedPeaks - this->expectedPeaks)/sqrt(bitStream->GetBitLength()/4.0 * 0.95 * 0.05);
 			this->pValue = this->mathFuncs->ErFc(fabs(this->normalizedDifference)/sqrt(2.0));
-			if (this->pValue < this->alpha) {
+			if (this->pValue < this->alpha) {				    
     			this->random = false;
 			}
 			else {
@@ -140,10 +141,10 @@ namespace DiceLockSecurity {
 	void DiscreteFourierTransformTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		percentile = 0.0;
-		observedPeaks = 0.0;
-		expectedPeaks = 0.0;
-		normalizedDifference = 0.0;
+		this->percentile = 0.0;
+		this->observedPeaks = 0.0;
+		this->expectedPeaks = 0.0;
+		this->normalizedDifference = 0.0;
 	}
 
 	// Gets the type of the object
@@ -303,7 +304,7 @@ namespace DiceLockSecurity {
 	void DiscreteFourierTransformTest::dradf2(int ido,int l1,double *cc,double *ch,double *wa1) {
 		int i,k;
 		int t0,t1,t2,t3,t4,t5,t6;
-
+  
 		t1 = 0;
 		t0 = (t2 = l1*ido);
 		t3 = ido<<1;
@@ -354,7 +355,7 @@ namespace DiceLockSecurity {
 		int i,k,t0,t1,t2,t3,t4,t5,t6;
 		double ci2,ci3,ci4,cr2,cr3,cr4;
 		t0 = l1*ido;
-
+  
 		t1 = t0;
 		t4 = t1<<1;
 		t2 = t1+(t1<<1);
@@ -428,7 +429,7 @@ namespace DiceLockSecurity {
 		int nbd;
 		double dcp,arg,dsp,ar1h,ar2h;
 		int idp2,ipp2;
-
+  
 		arg = tpi/(double)ip;
 		dcp = cos(arg);
 		dsp = sin(arg);

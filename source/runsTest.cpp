@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,12 +16,14 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
+#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 #include "runsTest.h"
 
 
@@ -29,7 +31,7 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
 
 	// Random Test Class enumerator name
@@ -37,31 +39,31 @@ namespace DiceLockSecurity {
 	// Random Test Class minimum stream length
 	const unsigned int	RunsTest::minimumLength = 100;
 
-	// Constructor, default
+	// Constructor, default 
 	RunsTest::RunsTest() {
 
-		pi = 0.0;
-		totalNumberRuns = 0.0;
-		argument = 0.0;
+		this->pi = 0.0;
+		this->totalNumberRuns = 0.0;
+		this->argument = 0.0;
 	}
 
 
-	// Constructor with a MathematicalFunctions object instantiated
+	// Constructor with a MathematicalFunctions object instantiated 
 	RunsTest::RunsTest(MathematicalFunctions* mathFuncObj) {
 
-		pi = 0.0;
-		totalNumberRuns = 0.0;
-		argument = 0.0;
+		this->pi = 0.0;
+		this->totalNumberRuns = 0.0;
+		this->argument = 0.0;
 	}
 
 	// Destructor
 	RunsTest::~RunsTest() {
 
-		pi = 0.0;
-		totalNumberRuns = 0.0;
-		argument = 0.0;
+		this->pi = 0.0;
+		this->totalNumberRuns = 0.0;
+		this->argument = 0.0;
 	}
-
+	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 	bool RunsTest::IsRandom(void) {
 
@@ -72,7 +74,7 @@ namespace DiceLockSecurity {
 	bool RunsTest::IsRandom(BaseCryptoRandomStream* bitStream) {
 		unsigned int    i, *r;
 		double product, sum;
-
+	
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
 			this->random = false;
@@ -94,7 +96,7 @@ namespace DiceLockSecurity {
 					r[i] = 0;
 				else
 					r[i] = 1;
-			}
+			} 
 			this->totalNumberRuns = 0;
 			for(i = 0; i < bitStream->GetBitLength()-1; i++)
 	        	this->totalNumberRuns += r[i];
@@ -102,7 +104,7 @@ namespace DiceLockSecurity {
 			product = this->pi * (1.e0 - this->pi);
 			this->argument = fabs(this->totalNumberRuns - 2.e0*bitStream->GetBitLength()*product)/(2.e0*sqrt(2.e0*bitStream->GetBitLength())*product);
 			this->pValue = this->mathFuncs->ErFc(this->argument);
-			if (this->pValue < this->alpha) {
+			if (this->pValue < this->alpha) {				    
 				this->random = false;
 			}
 			else {
@@ -121,9 +123,9 @@ namespace DiceLockSecurity {
 	void RunsTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		pi = 0.0;
-		totalNumberRuns = 0.0;
-		argument = 0.0;
+		this->pi = 0.0;
+		this->totalNumberRuns = 0.0;
+		this->argument = 0.0;
 	}
 
 	// Gets the type of the object
@@ -144,7 +146,7 @@ namespace DiceLockSecurity {
 		return this->pi;
 	}
 
-	// Gets the total number of runs result
+	// Gets the total number of runs result 
 	double RunsTest::GetTotalNumberRuns(void) {
 
 		return this->totalNumberRuns;

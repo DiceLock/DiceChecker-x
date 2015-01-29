@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,12 +16,14 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
+#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 #include "serialTest.h"
 
 
@@ -29,7 +31,7 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
 
 	// Random Test Class enumerator name
@@ -37,50 +39,50 @@ namespace DiceLockSecurity {
 	// Random Test Class minimum stream length
 	const unsigned int	SerialTest::minimumLength = 128;
 
-	// Constructor, default
+	// Constructor, default 
 	SerialTest::SerialTest() {
 
-		blockLength = 0;
-		pvalue2 = 0.0;
-		psim = 0.0;
-		psim1 = 0.0;
-		psim2 = 0.0;
-		delta1 = 0.0;
-		delta2 = 0.0;
+		this->blockLength = 16;
+		this->pvalue2 = 0.0;				
+		this->psim = 0.0; 
+		this->psim1 = 0.0; 
+		this->psim2 = 0.0; 
+		this->delta1 = 0.0; 
+		this->delta2 = 0.0;
 	}
 
 
-	// Constructor with a MathematicalFunctions object instantiated
+	// Constructor with a MathematicalFunctions object instantiated 
 	SerialTest::SerialTest(MathematicalFunctions* mathFuncObj) {
 
-		blockLength = 0;
-		pvalue2 = 0.0;
-		psim = 0.0;
-		psim1 = 0.0;
-		psim2 = 0.0;
-		delta1 = 0.0;
-		delta2 = 0.0;
+		this->blockLength = 16;
+		this->pvalue2 = 0.0;				
+		this->psim = 0.0; 
+		this->psim1 = 0.0; 
+		this->psim2 = 0.0; 
+		this->delta1 = 0.0; 
+		this->delta2 = 0.0;
 	}
 
 	// Destructor
 	SerialTest::~SerialTest() {
 
-		blockLength = 0;
-		pvalue2 = 0.0;
-		psim = 0.0;
-		psim1 = 0.0;
-		psim2 = 0.0;
-		delta1 = 0.0;
-		delta2 = 0.0;
+		this->blockLength = 0;
+		this->pvalue2 = 0.0;				
+		this->psim = 0.0; 
+		this->psim1 = 0.0; 
+		this->psim2 = 0.0; 
+		this->delta1 = 0.0; 
+		this->delta2 = 0.0;
 	}
 
-	// Psi2 function
+	// Psi2 function 
 	double SerialTest::psi2(int m, BaseCryptoRandomStream* bitStream) {
 		int     i, j, k, powLen;
 		double	sum, numOfBlocks;
 		unsigned int*  P;
-
-		if ((m == 0) || (m == -1))
+  
+		if ((m == 0) || (m == -1)) 
 			return 0.0;
 		numOfBlocks = bitStream->GetBitLength();
 		powLen = (int)pow((long double)2,m+1)-1;
@@ -89,9 +91,9 @@ namespace DiceLockSecurity {
 			this->error = InsufficientMemory;
 			return 0.0;
 		}
-		for(i = 1; i < powLen-1; i++)
+		for(i = 1; i < powLen-1; i++) 
 			P[i] = 0;
-		for(i = 0; i < numOfBlocks; i++) {
+		for(i = 0; i < numOfBlocks; i++) {		 
 			k = 1;
 			for(j = 0; j < m; j++) {
 				if (bitStream->GetBitPosition((i+j)%bitStream->GetBitLength()) == 0)
@@ -159,12 +161,12 @@ namespace DiceLockSecurity {
 	void SerialTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		pvalue2 = 0.0;
-		psim = 0.0;
-		psim1 = 0.0;
-		psim2 = 0.0;
-		delta1 = 0.0;
-		delta2 = 0.0;
+		this->pvalue2 = 0.0;				
+		this->psim = 0.0; 
+		this->psim1 = 0.0; 
+		this->psim2 = 0.0; 
+		this->delta1 = 0.0; 
+		this->delta2 = 0.0;
 	}
 
 	// Gets the type of the object
@@ -179,49 +181,49 @@ namespace DiceLockSecurity {
 		return this->minimumLength;
 	}
 
-	// Sets the "blockLength" parameter
+	// Sets the "blockLength" parameter 
 	void SerialTest::SetBlockLength(int param) {
 
 		this->blockLength = param;
 	}
 
-	// Gets the "blockLength" parameter
+	// Gets the "blockLength" parameter 
 	int SerialTest::GetBlockLength(void) {
 
 		return this->blockLength;
 	}
 
-	// Gets the "pvalue2" result
+	// Gets the "pvalue2" result  
 	double SerialTest::GetPValue2(void) {
 
 		return this->pvalue2;
 	}
 
-	// Gets the "psim" result
+	// Gets the "psim" result  
 	double SerialTest::GetPsim(void) {
 
 		return this->psim;
 	}
 
-	// Gets the "psim1" result
+	// Gets the "psim1" result  
 	double SerialTest::GetPsim1(void) {
 
 		return this->psim1;
 	}
 
-	// Gets the "psim2" result
+	// Gets the "psim2" result  
 	double SerialTest::GetPsim2(void) {
 
 		return this->psim2;
 	}
 
-	// Gets the "delta1" result
+	// Gets the "delta1" result  
 	double SerialTest::GetDelta1(void) {
 
 		return this->delta1;
 	}
 
-	// Gets the "delta2" result
+	// Gets the "delta2" result  
 	double SerialTest::GetDelta2(void) {
 
 		return this->delta2;

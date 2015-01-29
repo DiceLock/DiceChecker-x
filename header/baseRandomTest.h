@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,14 +16,13 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #ifndef BASERANDOMTEST_HPP
 
 #define BASERANDOMTEST_HPP
-
 
 #include "baseCryptoRandomStream.h"
 #include "mathematicalFunctions.h"
@@ -78,40 +77,40 @@ namespace DiceLockSecurity {
 
 		public:
 
-			// Constructor, default
+			/// Constructor, default 
 			BaseRandomTest();
 
-			// Constructor with a MathematicalFunctions object instantiated
+			/// Constructor with a MathematicalFunctions object instantiated 
 			BaseRandomTest(MathematicalFunctions *);
 
-			// Destructor
+			/// Destructor
 			virtual ~BaseRandomTest();
 
-			// Sets the BaseRandomTest alpha margin
+			/// Sets the BaseRandomTest alpha margin
 			void SetAlpha(double);
 
-			// Gets the BaseRandomTest alpha margin
+			/// Gets the BaseRandomTest alpha margin
 			double GetAlpha(void);
 
-			// Gets the BaseRandomTest pValue
+			/// Gets the BaseRandomTest pValue
 			double GetPValue(void);
 
-			// Gets the BaseRandomTest error of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest error of the last executed BaseCryptoRandomStream
 			RandomTestErrors GetError(void);
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			bool IsRandom(void);
 
-			// Tests the BaseCryptoRandomStream executed and returns the random value
+			/// Tests the BaseCryptoRandomStream executed and returns the random value
 			virtual bool IsRandom(BaseCryptoRandomStream*) {return false;};
 
-			// Initialize the object
+			/// Initialize the object
 			void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			virtual RandomTests GetType(void) {return NotDefined;};
 
-			// Gets the minimum stream length
+			/// Gets the minimum stream length 
 			virtual unsigned int GetMinimumLength(void) {return 0;};
 	};
   }

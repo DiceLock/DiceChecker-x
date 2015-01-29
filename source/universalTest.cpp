@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,10 +16,11 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
+#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include "universalTest.h"
@@ -29,7 +30,7 @@ using namespace std;
 
 
 namespace DiceLockSecurity {
-
+	
   namespace RandomTest {
 
 	// Random Test Class enumerator name
@@ -48,49 +49,49 @@ namespace DiceLockSecurity {
 		0,0,0,0,0,0,2.954,3.125,3.238,3.311,3.356,3.384,
 	    3.401,3.410,3.416,3.419,3.421};
 
-		// Constructor, default
+		// Constructor, default 
 	UniversalTest::UniversalTest() {
 
-		L = 0;
-		Q = 0;
-		K = 0;
-		sigma = 0.0;
-		phi = 0.0;
-		sum = 0.0;
-		expectedValueResult = 0.0;
-		varianceResult = 0.0;
-		bitsDiscarded = 0;
+		this->L = 0;
+		this->Q = 0;
+		this->K = 0;
+		this->sigma = 0.0;
+		this->phi = 0.0;
+		this->sum = 0.0;
+		this->expectedValueResult = 0.0;
+		this->varianceResult = 0.0;
+		this->bitsDiscarded = 0;
 	}
 
 
-	// Constructor with a MathematicalFunctions object instantiated
+	// Constructor with a MathematicalFunctions object instantiated 
 	UniversalTest::UniversalTest(MathematicalFunctions* mathFuncObj) {
 
-		L = 0;
-		Q = 0;
-		K = 0;
-		sigma = 0.0;
-		phi = 0.0;
-		sum = 0.0;
-		expectedValueResult = 0.0;
-		varianceResult = 0.0;
-		bitsDiscarded = 0;
+		this->L = 0;
+		this->Q = 0;
+		this->K = 0;
+		this->sigma = 0.0;
+		this->phi = 0.0;
+		this->sum = 0.0;
+		this->expectedValueResult = 0.0;
+		this->varianceResult = 0.0;
+		this->bitsDiscarded = 0;
 	}
 
 	// Destructor
 	UniversalTest::~UniversalTest() {
 
-		L = 0;
-		Q = 0;
-		K = 0;
-		sigma = 0.0;
-		phi = 0.0;
-		sum = 0.0;
-		expectedValueResult = 0.0;
-		varianceResult = 0.0;
-		bitsDiscarded = 0;
+		this->L = 0;
+		this->Q = 0;
+		this->K = 0;
+		this->sigma = 0.0;
+		this->phi = 0.0;
+		this->sum = 0.0;
+		this->expectedValueResult = 0.0;
+		this->varianceResult = 0.0;
+		this->bitsDiscarded = 0;
 	}
-
+	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 	bool UniversalTest::IsRandom(void) {
 
@@ -124,7 +125,7 @@ namespace DiceLockSecurity {
 		else if (bitStream->GetBitLength() >= 387840)     this->L = 6;
 
 		this->Q = 10*(int)pow((double)2,this->L);
-		this->K = (int)((long double)floor((double)(bitStream->GetBitLength()/this->L)) - (double)this->Q);
+		this->K = (int)((long double)floor((double)(bitStream->GetBitLength()/this->L)) - (double)this->Q);	 		    
 		if ((double)this->Q < 10*pow((double)2,this->L)) {
 			this->random = false;
 			this->error = LOrQOutOfRange;
@@ -144,17 +145,17 @@ namespace DiceLockSecurity {
 				this->random = false;
 				return this->random ;
 			}
-			for(i = 0; i < p; i++)
+			for(i = 0; i < p; i++) 
 				T[i] = 0;
-			for(i = 1; i <= this->Q; i++) {
+			for(i = 1; i <= this->Q; i++) {			
 				decRep = 0;
-				for(j = 0; j < this->L; j++)
+				for(j = 0; j < this->L; j++) 
 					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2,this->L-1-j);
 				T[decRep] = i;
 			}
-			for(i = this->Q+1; i <= this->Q+this->K; i++) {
+			for(i = this->Q+1; i <= this->Q+this->K; i++) { 	
 				decRep = 0;
-				for(j = 0; j < this->L; j++)
+				for(j = 0; j < this->L; j++) 
 					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2,this->L-1-j);
 				this->sum += log((double)(i - T[decRep]))/log((double)2);
 				T[decRep] = i;
@@ -164,7 +165,7 @@ namespace DiceLockSecurity {
 			this->pValue = this->mathFuncs->ErFc(arg);
 			if (isNegative(this->pValue) || isGreaterThanOne(this->pValue))
 	    		this->error = PValueOutOfRange;
-			if (this->pValue < this->alpha) {
+			if (this->pValue < this->alpha) {				    
 	    		this->random = false;
 			}
 			else {
@@ -179,15 +180,15 @@ namespace DiceLockSecurity {
 	void UniversalTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		L = 0;
-		Q = 0;
-		K = 0;
-		sigma = 0.0;
-		phi = 0.0;
-		sum = 0.0;
-		expectedValueResult = 0.0;
-		varianceResult = 0.0;
-		bitsDiscarded = 0;
+		this->L = 0;
+		this->Q = 0;
+		this->K = 0;
+		this->sigma = 0.0;
+		this->phi = 0.0;
+		this->sum = 0.0;
+		this->expectedValueResult = 0.0;
+		this->varianceResult = 0.0;
+		this->bitsDiscarded = 0;
 	}
 
 	// Gets the type of the object

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright � 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,14 +16,13 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
-//
+// 
 
 #ifndef CUMULATIVESUMREVERSETEST_HPP
 
 #define CUMULATIVESUMREVERSETEST_HPP
-
 
 #include "baseRandomTest.h"
 #include "mathematicalFunctions.h"
@@ -37,40 +36,40 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
+			/// Random Test Class minimum stream length
 			static const unsigned int	minimumLength;
 
 			double cuSum;
 
 		public:
 
-			// Constructor, default
+			/// Constructor, default 
 			CumulativeSumReverseTest();
 
-			// Constructor with a MathematicalFunctions object instantiated
+			/// Constructor with a MathematicalFunctions object instantiated 
 			CumulativeSumReverseTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			~CumulativeSumReverseTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			RandomTests GetType(void);
 
-			// Gets the minimum random stream length
+			/// Gets the minimum random stream length
 			unsigned int GetMinimumLength(void);
 
-			// Gets the maximum partial sum
+			/// Gets the maximum partial sum
 			double GetCuSum(void);
 	};
   }
