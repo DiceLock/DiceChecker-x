@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -38,22 +38,22 @@ namespace DiceLockSecurity {
 			/// Random Test Class enumerator name
 			static const RandomTests	test;
 			/// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			static const unsigned long int	minimumLength;
 
 			static const double expectedValue[17];
 			static const double variance[17];
 
 		protected:
 
-			int		L;
-			int     Q;
-			int     K;
+			unsigned long int	L;
+			unsigned long int Q;
+			unsigned long int K;
 			double  sigma;
 			double  phi;
 			double  sum;
 			double  expectedValueResult;
 			double  varianceResult;
-			int     bitsDiscarded;
+			unsigned long int bitsDiscarded;
 
 		public:
 
@@ -79,16 +79,16 @@ namespace DiceLockSecurity {
 			RandomTests GetType(void);
 
 			/// Gets the minimum random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Gets the "L" result
-			int GetL(void);
+			unsigned long int GetL(void);
 
 			/// Gets the "Q" result
-			int GetQ(void);
+			unsigned long int GetQ(void);
 
 			/// Gets the "K" result
-			int GetK(void);
+			unsigned long int GetK(void);
 
 			/// Gets the "sigma" result
 			double GetSigma(void);
@@ -106,7 +106,7 @@ namespace DiceLockSecurity {
 			double GetVariance(void);
 
 			/// Gets the "bitsDiscarded" result
-			int GetBitsDiscarded(void);
+			unsigned long int GetBitsDiscarded(void);
 	};
   }
 }

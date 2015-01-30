@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -38,37 +38,37 @@ namespace DiceLockSecurity {
 			/// Random Test Class enumerator name
 			static const RandomTests	test;
 			/// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			static const unsigned long int minimumLength;
 
 			double  chiSquared;
-			int     matrixNumber;
-			int     bitsDiscarded;
+			unsigned long int matrixNumber;
+			unsigned long int bitsDiscarded;
 			double  p30, p31, p32;		 	/// Probabilities
 			double	f30, f31, f32;			/// Frequencies
 
 			/// Create Matrix 
-			unsigned char**	CreateMatrix(int, int);
+			unsigned char**	CreateMatrix(unsigned long int, unsigned long int);
 
 			/// Define Matrix 
-			void		DefineMatrix(BaseCryptoRandomStream*, int, int, unsigned char**, int);
+			void DefineMatrix(BaseCryptoRandomStream*, signed long int, signed long int, unsigned char**, signed long int);
 
 			/// Deletes matrix 
-			void		DeleteMatrix(int, unsigned char**);
+			void DeleteMatrix(signed long int, unsigned char**);
 
 			/// Computes rank 
-			int			ComputeRank(int, int, unsigned char**);
+			signed long int ComputeRank(signed long int, signed long int, unsigned char**);
 
 			/// Perform Elementary Row Operations
-			void		PerformElementaryRowOperations(int, int, int, int, unsigned char**);
+			void PerformElementaryRowOperations(signed long int, signed long int, signed long int, signed long int, unsigned char**);
 
 			/// Find Unit Element And Swap
-			int			FindUnitElementAndSwap(int, int, int, int, unsigned char**);
+			signed long int FindUnitElementAndSwap(signed long int, signed long int, signed long int, signed long int, unsigned char**);
 
 			/// Swap Rows 
-			int			SwapRows(int, int, int, unsigned char**);
+			signed long int SwapRows(signed long int, signed long int, signed long int, unsigned char**);
 
 			/// Determine Rank 
-			int			DetermineRank(int, int, int, unsigned char**);
+			signed long int DetermineRank(signed long int, signed long int, signed long int, unsigned char**);
 
 		public:
 
@@ -94,16 +94,16 @@ namespace DiceLockSecurity {
 			RandomTests GetType(void);
 
 			/// Gets the minimum random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Gets the "chiSquared" result
 			double GetChiSquared(void);
 
 			/// Gets the "matrixNumber" result
-			int GetMatrixNumber(void);
+			unsigned long int GetMatrixNumber(void);
 
 			/// Gets the "bitsDiscarded" result
-			int GetBitsDiscarded(void);
+			unsigned long int GetBitsDiscarded(void);
 
 			/// Gets the "p30" result
 			double GetP30(void);

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -20,14 +20,10 @@
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
-#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
 #include "blockFrequencyTest.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {
@@ -37,12 +33,13 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests BlockFrequencyTest::test = BlockFrequency;
 	// Random Test Class minimum stream length
-	const unsigned int	BlockFrequencyTest::minimumLength = 100;
+	const unsigned long int	BlockFrequencyTest::minimumLength = 100;
 
 	// Constructor, default 
 	BlockFrequencyTest::BlockFrequencyTest() {
 
 		this->blockLength = 128;
+		this->blockNumber = 0;
 		this->alpha = 0.0;
 		this->pValue = 0.0;
 		this->random = false;
@@ -76,7 +73,7 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool BlockFrequencyTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		int    i, j;
+		unsigned long int i, j;
 		double blockSum, arg1, arg2;
 		double sum, pi, v;
 
@@ -89,11 +86,11 @@ namespace DiceLockSecurity {
 		this->error = NoError;
 		this->blockNumber = (int)floor((double)bitStream->GetBitLength()/(double)this->blockLength); 	// Number of Stream blocks      
 		sum = 0.0;
-		for(i = 0; i < this->blockNumber; i++) {	// N=10000 for each substring block
+		for (i = 0; i < this->blockNumber; i++) {	// N=10000 for each substring block
 			pi = 0.0;
 			blockSum = 0.0;
 			bitStream->SetBitPosition(i*this->blockLength);
-			for(j = 0; j < this->blockLength; j++) 	// m=100 compute the "i"th Pi Value */	 
+			for (j = 0; j < this->blockLength; j++) 	// m=100 compute the "i"th Pi Value */	 
 				blockSum += bitStream->GetBitForward();		
 			pi = (double)blockSum/(double)this->blockLength;
 			v = pi - 0.5;
@@ -133,19 +130,19 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int BlockFrequencyTest::GetMinimumLength(void) {
+	unsigned long int BlockFrequencyTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}
 
 	// Sets the blockLength
-	void BlockFrequencyTest::SetBlockLength(unsigned int block) {
+	void BlockFrequencyTest::SetBlockLength(unsigned long int block) {
 
 		this->blockLength = block;
 	}
 
 	// Gets the blockLength
-	unsigned int BlockFrequencyTest::GetBlockLength(void) {
+	unsigned long int BlockFrequencyTest::GetBlockLength(void) {
 
 		return this->blockLength;
 	}
@@ -157,13 +154,13 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets blockNumber tested
-	int	BlockFrequencyTest::GetBlockNumber(void) {
+	unsigned long int	BlockFrequencyTest::GetBlockNumber(void) {
 
 		return this->blockNumber;
 	}
 
 	// Gets the bitsDiscarded not tested
-	int BlockFrequencyTest::GetBitsDiscarded(void) {
+	unsigned long int BlockFrequencyTest::GetBitsDiscarded(void) {
 
 		return this->bitsDiscarded;
 	}

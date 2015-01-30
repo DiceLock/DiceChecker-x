@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -38,9 +38,9 @@ namespace DiceLockSecurity {
 			/// Random Test Class enumerator name
 			static const RandomTests	test;
 			/// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			static const unsigned long int	minimumLength;
 
-			int		blockLength;
+			unsigned long int blockLength;
 			double	pvalue2;				
 			double	psim; 
 			double	psim1; 
@@ -49,7 +49,7 @@ namespace DiceLockSecurity {
 			double	delta2;
 
 			/// Psi2 function 
-			double psi2(int, BaseCryptoRandomStream*);
+			double psi2(signed long int, BaseCryptoRandomStream*);
 
 		public:
 
@@ -75,13 +75,13 @@ namespace DiceLockSecurity {
 			RandomTests GetType(void);
 
 			/// Gets the minimum random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Sets the "blockLength" parameter 
-			void SetBlockLength(int);
+			void SetBlockLength(unsigned long int);
 
 			/// Gets the "blockLength" parameter 
-			int GetBlockLength(void);
+			unsigned long int GetBlockLength(void);
 
 			/// Gets the pvalue1 result  
 			double GetPvalue(void);				
@@ -105,7 +105,7 @@ namespace DiceLockSecurity {
 			double GetDelta2(void);
 
 			/// Gets the "BlockSizeRecommended" for the indicated stream length
-			unsigned int MaximumBlockSizeRecommended(unsigned long int);
+			unsigned long int MaximumBlockSizeRecommended(unsigned long int);
 	};
   }
 }

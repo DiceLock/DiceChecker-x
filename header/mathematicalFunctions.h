@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -31,6 +31,7 @@
 #define isGreaterThanOne(x)  ((x) >  1.e0 ?   1 : 0)
 #define isZero(x)            ((x) == 0.e0 ?   1 : 0)
 #define isOne(x)             ((x) == 1.e0 ?   1 : 0)
+
 
 namespace DiceLockSecurity {
 
@@ -85,11 +86,11 @@ namespace DiceLockSecurity {
 			double	IGammaC(double, double);
 
 			/// Evaluate polynomial of degree N
-			double	PolEvl(double,double *, int);
+			double	PolEvl(double, double *, signed long int);
 			
 			///                                          N
 			/// Evaluate polynomial when coefficient of x  is 1.0.
-			double	P1Evl(double, double *, int);
+			double	P1Evl(double, double *, signed long int);
 			
 			/// Error function in double precision 
 			double	ErF(double);
@@ -101,7 +102,7 @@ namespace DiceLockSecurity {
 			double	 Normal(double);
 			
 			/// Class common error handling member
-			int		GetError();
+			unsigned short int	GetError();
 
 			/// Class common error handling member
 			MathematicalErrors GetMathError();

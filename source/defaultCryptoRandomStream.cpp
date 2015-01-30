@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright  2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -22,11 +22,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-
 #include "defaultCryptoRandomStream.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {
@@ -49,7 +45,12 @@ namespace DiceLockSecurity {
 	DefaultCryptoRandomStream::DefaultCryptoRandomStream(unsigned long int streamLength) {
 
 		try {
-			this->cryptoStream = (unsigned char *)calloc(streamLength,sizeof(byteBits));
+			if (streamLength % BYTEBITS) {
+				this->cryptoStream = (unsigned char *)calloc(streamLength/BYTEBITS + 1,sizeof(byteBits));
+			}
+			else {
+				this->cryptoStream = (unsigned char *)calloc(streamLength/BYTEBITS,sizeof(byteBits));
+			}
 			if (this->cryptoStream == NULL )
 				throw "Memory allocation failure!";
 			else {

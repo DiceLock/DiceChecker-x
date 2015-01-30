@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -20,14 +20,10 @@
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
-#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
 #include "serialTest.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {
@@ -37,7 +33,7 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests SerialTest::test = Serial;
 	// Random Test Class minimum stream length
-	const unsigned int	SerialTest::minimumLength = 128;
+	const unsigned long int	SerialTest::minimumLength = 128;
 
 	// Constructor, default 
 	SerialTest::SerialTest() {
@@ -77,16 +73,16 @@ namespace DiceLockSecurity {
 	}
 
 	// Psi2 function 
-	double SerialTest::psi2(int m, BaseCryptoRandomStream* bitStream) {
-		int     i, j, k, powLen;
+	double SerialTest::psi2(signed long int m, BaseCryptoRandomStream* bitStream) {
+		signed long int i, j, k, powLen;
 		double	sum, numOfBlocks;
-		unsigned int*  P;
+		unsigned long int*  P;
   
 		if ((m == 0) || (m == -1)) 
 			return 0.0;
 		numOfBlocks = bitStream->GetBitLength();
-		powLen = (int)pow((long double)2,m+1)-1;
-		P = (unsigned int*)calloc(powLen,sizeof(unsigned int));
+		powLen = (int)pow((long double)2,(int)m+1)-1;
+		P = (unsigned long int*)calloc(powLen,sizeof(unsigned long int));
 		if (P == NULL) {
 			this->error = InsufficientMemory;
 			return 0.0;
@@ -95,7 +91,7 @@ namespace DiceLockSecurity {
 			P[i] = 0;
 		for(i = 0; i < numOfBlocks; i++) {		 
 			k = 1;
-			for(j = 0; j < m; j++) {
+			for(j = 0; j < (int)m; j++) {
 				if (bitStream->GetBitPosition((i+j)%bitStream->GetBitLength()) == 0)
 					k *= 2;
 				else if (bitStream->GetBitPosition((i+j)%bitStream->GetBitLength()) == 1)
@@ -104,9 +100,9 @@ namespace DiceLockSecurity {
 			P[k-1]++;
 		}
 		sum = 0.0;
-		for(i = (int)pow((long double)2,m)-1; i < (int)pow((long double)2,m+1)-1; i++)
+		for(i = (int)pow((long double)2,(int)m)-1; i < (int)pow((long double)2,(int)m+1)-1; i++)
 			sum += pow((long double)P[i],2);
-		sum = (sum * pow((long double)2,m)/(double)bitStream->GetBitLength()) - (double)bitStream->GetBitLength();
+		sum = (sum * pow((long double)2,(int)m)/(double)bitStream->GetBitLength()) - (double)bitStream->GetBitLength();
 		free(P);
 		return sum;
 	}
@@ -120,7 +116,7 @@ namespace DiceLockSecurity {
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool SerialTest::IsRandom(BaseCryptoRandomStream* bitStream) {
 
-		if (bitStream->GetBitLength() < (unsigned long)this->GetMinimumLength()) {
+		if (bitStream->GetBitLength() < (unsigned long int)this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
 			this->random = false;
 			return this->random;
@@ -131,14 +127,14 @@ namespace DiceLockSecurity {
 		this->psim2 = psi2(this->blockLength-2, bitStream);
 		this->delta1 = this->psim - this->psim1;
 		this->delta2 = this->psim - 2.0*this->psim1 + this->psim2;
-		this->pValue = this->mathFuncs->IGammaC(pow((long double)2,this->blockLength-1)/2,this->delta1/2.0);
+		this->pValue = this->mathFuncs->IGammaC(pow((long double)2,(int)(this->blockLength-1))/2,this->delta1/2.0);
 		if (isnan(this->pValue)) {
 			this->pValue = 0;
 			this->error = MathematicianNAN;
 			this->random = false;
 			return this->random;
 		}
-		this->pvalue2 = this->mathFuncs->IGammaC(pow((long double)2,this->blockLength-2)/2,this->delta2/2.0);
+		this->pvalue2 = this->mathFuncs->IGammaC(pow((long double)2,(int)(this->blockLength-2))/2,this->delta2/2.0);
 		if (isnan(this->pvalue2)) {
 			this->pvalue2 = 0;
 			this->error = MathematicianNAN;
@@ -176,19 +172,19 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int SerialTest::GetMinimumLength(void) {
+	unsigned long int SerialTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}
 
 	// Sets the "blockLength" parameter 
-	void SerialTest::SetBlockLength(int param) {
+	void SerialTest::SetBlockLength(unsigned long int param) {
 
 		this->blockLength = param;
 	}
 
 	// Gets the "blockLength" parameter 
-	int SerialTest::GetBlockLength(void) {
+	unsigned long int SerialTest::GetBlockLength(void) {
 
 		return this->blockLength;
 	}
@@ -230,7 +226,7 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the "BlockSizeRecommended" for the indicated stream length
-	unsigned int SerialTest::MaximumBlockSizeRecommended(unsigned long int length) {
+	unsigned long int SerialTest::MaximumBlockSizeRecommended(unsigned long int length) {
 
 		return MAX(1,(int)(log((long double)length)/log((long double)2)-2));
 	}

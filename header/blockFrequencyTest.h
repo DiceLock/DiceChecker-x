@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -39,12 +39,12 @@ namespace DiceLockSecurity {
 			/// Random Test Class enumerator name
 			static const RandomTests	test;
 			/// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			static const unsigned long int	minimumLength;
 
-			int 	blockLength;
-			double	chiSquared;
-			int		blockNumber;
-			int 	bitsDiscarded;
+			unsigned long int 	blockLength;
+			double				chiSquared;
+			unsigned long int	blockNumber;
+			unsigned long int 	bitsDiscarded;
 
 		public:
 
@@ -70,22 +70,22 @@ namespace DiceLockSecurity {
 			RandomTests GetType(void);
 
 			/// Gets the minimum random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Sets the blockLength
-			void SetBlockLength(unsigned int);
+			void SetBlockLength(unsigned long int);
 
 			/// Gets the blockLength
-			unsigned int GetBlockLength(void);
+			unsigned long int GetBlockLength(void);
 
 			/// Gets chiSquared
 			double GetChiSquared(void);
 
 			/// Gets blocksNumber tested
-			int GetBlockNumber(void);
+			unsigned long int GetBlockNumber(void);
 
 			/// Gets the bitsDiscarded not tested
-			int GetBitsDiscarded(void);
+			unsigned long int GetBitsDiscarded(void);
 	};
   }
 }

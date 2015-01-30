@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -20,13 +20,9 @@
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
-#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include "mathematicalFunctions.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {
@@ -79,8 +75,8 @@ namespace DiceLockSecurity {
 		// Logarithm of gamma function
 		double MathematicalFunctions::LGamma(double x) {
 			double p, q, u, w, z;
-			int i;
-			int sgngam = 0;
+			signed long int i;
+			signed long int sgngam = 0;
 
 			sgngam = 1;
 			this->Error = false;
@@ -240,10 +236,10 @@ namespace DiceLockSecurity {
 		}
 
 		// Evaluate polynomial of degree N
-		double MathematicalFunctions::PolEvl(double x,double coef[], int N) {
+		double MathematicalFunctions::PolEvl(double x,double coef[], signed long int N) {
 			double ans;
 			double *p;
-			int i;
+			signed long int i;
 
 			p = coef;
 			ans = *p++;
@@ -256,10 +252,10 @@ namespace DiceLockSecurity {
 
 		//                                          N
 		// Evaluate polynomial when coefficient of x  is 1.0.
-		double MathematicalFunctions::P1Evl(double x, double coef[], int N) {
+		double MathematicalFunctions::P1Evl(double x, double coef[], signed long int N) {
 			double ans;
 			double *p;
-			int i;
+			signed long int i;
 
 			p = coef;
 			ans = x + *p++;
@@ -275,7 +271,7 @@ namespace DiceLockSecurity {
 			static const double two_sqrtpi = 1.128379167095512574;
 			static const double	rel_error = 1E-12;
 			double	sum = x, term = x, xsqr = x * x;
-			int		j = 1;
+			signed long int j = 1;
 
 			if ( fabs(x) > 2.2 )
 				return 1.0 - this->ErFc(x);
@@ -331,7 +327,7 @@ namespace DiceLockSecurity {
 		}
 
 		// Class common error handling member
-		int	MathematicalFunctions::GetError() {
+		unsigned short int MathematicalFunctions::GetError() {
 
 			return this->Error;
 		}

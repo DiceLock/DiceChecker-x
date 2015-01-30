@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -39,12 +39,14 @@ namespace DiceLockSecurity {
 
 			BaseRandomTest*			suite[NumberOfTests];
 			bool					selfCreatedTest[NumberOfTests];
+			bool					usedTests[NumberOfTests];
 			bool					random;
+			bool					strictRandomnessCheck;
 			MathematicalFunctions*  mathFunctions;    
 			bool					selfCreatedMaths;
 			RandomTestErrors		error;
-			int						instantiatedTests;
-			int						numberOfErrors;
+			unsigned short int		instantiatedTests;
+			unsigned short int		numberOfErrors;
 			RandomTests				errorTest;
 			RandomTests				nonRandomTest;
 
@@ -207,11 +209,11 @@ namespace DiceLockSecurity {
 			bool IsRandom(void);
 
 			/// Gets the number of Random Tests that contains the suite
-			int GetInstantiatedTests(void);
+			unsigned short int GetInstantiatedTests(void);
 
 			/// Gets the minimum random stream length in bits corresponding
 			/// to random number test with higher random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Gets the corresponding random number test 
 			/// with higher minimum random stream length in bits 
@@ -234,6 +236,61 @@ namespace DiceLockSecurity {
 
 			/// Gets the number of random tests that can be used in the RandomTestSuite
 			RandomTests GetMaximumNumberOfTests(void);
+
+			/// STRICT RANDOMNESS METHODS
+
+			/// Sets strict randomness checking, if all random tests instantiated in the suite will be verified
+			/// true: all random tests instantiated in the suite will be verified
+			/// false: just random tests that can be checked (stream length larger than random test minimum length) will be verified 
+			void SetStrictRandomnessCheck(bool);
+
+			/// Gets strict randomness checking, if all random tests instantiated in the suite will be verified
+			bool SetStrictRandomnessCheck(void);
+
+			/// USED TEST METHODS WHEN STRICT RANDOMNESS CHECKING IS DISABLED
+
+			/// Gets number of random test that has been used in last random test checking
+			unsigned short int GetUsedTestsNumber(void);
+
+			/// Gets if enumerated random test has been used in last random test checking
+			bool GetUsedTest(RandomTests);
+
+			/// Gets if frequency random test has been used in last random test checking
+			bool GetUsedFrequencyTest(void);
+
+			/// Gets if block frequency random test has been used in last random test checking
+			bool GetUsedBlockFrequencyTest(void);
+
+			/// Gets if cumulative sum forward random test has been used in last random test checking
+			bool GetUsedCumulativeSumForwardTest(void);
+
+			/// Gets if cumulative sum reverse random test has been used in last random test checking
+			bool GetUsedCumulativeSumReverseTest(void);
+
+			/// Gets if runs random test has been used in last random test checking
+			bool GetUsedRunsTest(void);
+
+			/// Gets if longest run of ones random test has been used in last random test checking
+			bool GetUsedLongestRunOfOnesTest(void);
+
+			/// Gets if rank random test has been used in last random test checking
+			bool GetUsedRankTest(void);
+
+			/// Gets if universal random test has been used in last random test checking
+			bool GetUsedUniversalTest(void);
+
+			/// Gets if approximate entropy random test has been used in last random test checking
+			bool GetUsedApproximateEntropyTest(void);
+
+			/// Gets if serial random test has been used in last random test checking
+			bool GetUsedSerialTest(void);
+
+			/// Gets if discrete fourier transform random test has been used in last random test checking
+			bool GetUsedDiscreteFourierTransformTest(void);
+
+			/// Resets all random test "used" signal to false 
+			void ResetUsedTests(void);
+
 	};
   }
 }

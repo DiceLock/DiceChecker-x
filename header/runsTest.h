@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -38,7 +38,7 @@ namespace DiceLockSecurity {
 			/// Random Test Class enumerator name
 			static const RandomTests	test;
 			/// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			static const unsigned long int	minimumLength;
 
 			double      pi;
 			double      totalNumberRuns;
@@ -48,9 +48,6 @@ namespace DiceLockSecurity {
 
 			/// Constructor, default 
 			RunsTest();
-
-			/// Constructor, setting longRunCase 
-			RunsTest(int);
 
 			/// Constructor with a MathematicalFunctions object instantiated 
 			RunsTest(MathematicalFunctions*);
@@ -71,7 +68,7 @@ namespace DiceLockSecurity {
 			RandomTests GetType(void);
 
 			/// Gets the minimum random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Gets the "pi" result
 			double GetPi(void);

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -20,13 +20,9 @@
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
-#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include "cumulativeSumReverseTest.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {
@@ -36,7 +32,7 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests CumulativeSumReverseTest::test = CumulativeSumReverse;
 	// Random Test Class minimum stream length
-	const unsigned int	CumulativeSumReverseTest::minimumLength = 100;
+	const unsigned long int	CumulativeSumReverseTest::minimumLength = 100;
 
 	// Constructor, default 
 	CumulativeSumReverseTest::CumulativeSumReverseTest() {
@@ -65,7 +61,7 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool CumulativeSumReverseTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		int    i, k, start, finish;
+		signed long int i, k, start, finish;
 		double z, sum, sum1, sum2;
  
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
@@ -122,7 +118,7 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int CumulativeSumReverseTest::GetMinimumLength(void) {
+	unsigned long int CumulativeSumReverseTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}

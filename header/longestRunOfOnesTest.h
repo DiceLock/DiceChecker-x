@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -39,30 +39,27 @@ namespace DiceLockSecurity {
 			/// Random Test Class enumerator name
 			static const RandomTests	test;
 			/// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			static const unsigned long int	minimumLength;
 
-			/// Random Test block sizes and minimum lengths
+			/// Random Test Class block sizes and minimum lengths
 			struct blockSizeMinimumLength {
-				int blockSize;
-				int minimumLength;
+				unsigned long int blockSize;
+				unsigned long int minimumLength;
 			};
-			static const short	numberBlockSizes;
+			static const unsigned short int numberBlockSizes;
 			static const blockSizeMinimumLength	blockSizes[3];
 
-			static const int NumAssignments;	// 7 
-			int          longRunCase;
-			int          substringNumber;
-			int          substringLength;
+			static const unsigned short int NumAssignments;	// 7 
+			unsigned long int longRunCase;
+			unsigned long int substringNumber;
+			unsigned long int substringLength;
+			unsigned long int *assignment;
 			double       chiSquared;
-			unsigned int *assignment;
 			
 		public:
 
 			/// Constructor, default 
 			LongestRunOfOnesTest();
-
-			/// Constructor, setting longRunCase 
-			LongestRunOfOnesTest(int);
 
 			/// Constructor with a MathematicalFunctions object instantiated 
 			LongestRunOfOnesTest(MathematicalFunctions*);
@@ -83,28 +80,28 @@ namespace DiceLockSecurity {
 			RandomTests GetType(void);
 
 			/// Gets the minimum random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Sets the longRunCase parameter 
-			void SetLongRunCase(int);
+			void SetLongRunCase(unsigned long int);
 
 			/// Gets the longRunCase parameter 
-			int GetLongRunCase(void);
+			unsigned long int GetLongRunCase(void);
 
 			/// Gets the "substringNumber" result 
-			int GetSubstringNumber(void);
+			unsigned long int GetSubstringNumber(void);
 
 			/// Gets the "substringLength" result
-			int GetSubstringLength(void);
+			unsigned long int GetSubstringLength(void);
 
 			/// Gets the chiSquared result
 			double GetChiSquared(void);
 
 			/// Gets the Assignment result
-			void GetAssignment(unsigned int *);
+			void GetAssignment(unsigned long int *);
 
 			/// Gets the Assignment result based on the index
-			unsigned int GetAssignmentOfIndex(int);
+			unsigned long int GetAssignmentOfIndex(unsigned long int);
 	};
   }
 }

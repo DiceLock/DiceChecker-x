@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -39,15 +39,15 @@ namespace DiceLockSecurity {
 			/// Random Test Class enumerator name
 			static const RandomTests	test;
 			/// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			static const unsigned long int	minimumLength;
 
-			int     blockLength;
+			unsigned long int blockLength;
 			double	chiSquared;
 			double	phi;
 			double	phiPlusOne;
 			double	apEn;
 			bool	blockSizeExceeded;		
-			unsigned int	maximumBlockSizeRecommended;	 
+			unsigned long int maximumBlockSizeRecommended;	 
 
 		public:
 
@@ -73,13 +73,13 @@ namespace DiceLockSecurity {
 			RandomTests GetType(void);
 
 			/// Gets the minimum random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Sets the "m" parameter
-			void SetBlockLength(int);
+			void SetBlockLength(unsigned long int);
 
 			/// Gets the "m" parameter
-			int GetBlockLength(void);
+			unsigned long int GetBlockLength(void);
 
 			/// Gets the "ChiSquared" result
 			double GetChiSquared(void);
@@ -97,10 +97,10 @@ namespace DiceLockSecurity {
 			bool GetBlockSizeExceeded(void);		
 
 			/// Gets the "BlockSizeRecommended" result
-			unsigned int GetMaximumBlockSizeRecommended(void);	 
+			unsigned long int GetMaximumBlockSizeRecommended(void);	 
 
 			/// Gets the "BlockSizeRecommended" for the indicated stream length
-			unsigned int MaximumBlockSizeRecommended(unsigned int);
+			unsigned long int MaximumBlockSizeRecommended(unsigned long int);
 	};
   }
 }

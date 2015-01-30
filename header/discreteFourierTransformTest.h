@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -41,9 +41,9 @@ namespace DiceLockSecurity {
 			/// Random Test Class enumerator name
 			static const RandomTests	test;
 			/// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			static const unsigned long int	minimumLength;
 
-			static const int	ntryh[4];
+			static const signed long int ntryh[4];
 			static const double	tpi;
 			static const double	hsqt2;
 
@@ -52,11 +52,11 @@ namespace DiceLockSecurity {
 			double      expectedPeaks;
 			double      normalizedDifference;
 
-			void drfti1(int, double *, int *);
-			void dradf2(int, int, double *, double *, double *);
-			void dradf4(int, int, double *, double *, double *, double *, double *);
-			void drftf1(int, double *, double *, double *, int *);
-			void dradfg(int, int, int, int, double *, double *, double *, double *, double *, double *);
+			void drfti1(signed long int, double *, signed long int *);
+			void dradf2(signed long int, signed long int, double *, double *, double *);
+			void dradf4(signed long int, signed long int, double *, double *, double *, double *, double *);
+			void drftf1(signed long int, double *, double *, double *, signed long int *);
+			void dradfg(signed long int, signed long int, signed long int, signed long int, double *, double *, double *, double *, double *, double *);
 
 		public:
 
@@ -82,7 +82,7 @@ namespace DiceLockSecurity {
 			RandomTests GetType(void);
 
 			/// Gets the minimum random stream length
-			unsigned int GetMinimumLength(void);
+			unsigned long int GetMinimumLength(void);
 
 			/// Gets the "percentile" result
 			double GetPercentile(void);

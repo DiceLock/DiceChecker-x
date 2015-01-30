@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -19,12 +19,8 @@
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
-#include <stdexcept>
 #include <stdlib.h>
 #include "randomTestSuite.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {
@@ -36,13 +32,15 @@ namespace DiceLockSecurity {
 
 		// Constructor, default, initializes suite and instantiates MathematicalFunctions  
 		RandomTestSuite::RandomTestSuite() {
-			int i;
+			unsigned short int i;
 
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			for (i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++) {
 				this->suite[i] = NULL;
 				this->selfCreatedTest[i] = false;
+				this->usedTests[i] = false;
 			}
 			this->random = false;
+			this->strictRandomnessCheck = false;
 			mathFunctions = new MathematicalFunctions();
 			selfCreatedMaths = true;
 			this->error = NoError;
@@ -54,13 +52,15 @@ namespace DiceLockSecurity {
 
 		// Constructor, initializes suite and assigns MathematicalFunctions parameter
 		RandomTestSuite::RandomTestSuite(MathematicalFunctions* mathFuncs) {
-			int i;
+			unsigned short int i;
 
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			for (i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++) {
 				this->suite[i] = NULL;
 				this->selfCreatedTest[i] = false;
+				this->usedTests[i] = false;
 			}
 			this->random = false;
+			this->strictRandomnessCheck = false;
 			mathFunctions = mathFuncs;
 			selfCreatedMaths = false;
 			this->error = NoError;
@@ -72,16 +72,18 @@ namespace DiceLockSecurity {
 
 		// Destructor
 		RandomTestSuite::~RandomTestSuite() {
-			int i;
+			unsigned short int i;
 
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			for (i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++) {
 				if (this->suite[i] != NULL) {
 					delete this->suite[i];
 					this->suite[i] = NULL;
 				    this->selfCreatedTest[i] = false;
 				}
+				this->usedTests[i] = false;
 			}
 			this->random = false;
+			this->strictRandomnessCheck = false;
 			if (selfCreatedMaths) {
 				delete mathFunctions;
 			}
@@ -182,7 +184,7 @@ namespace DiceLockSecurity {
 
 		// Creates and adds all random tests to the suite 
 		void RandomTestSuite::AddAll(void) {
-			int i;
+			unsigned short int i;
 
 			this->suite[Frequency] = new FrequencyTest(this->mathFunctions);
 			this->suite[BlockFrequency] = new BlockFrequencyTest(this->mathFunctions);
@@ -195,7 +197,7 @@ namespace DiceLockSecurity {
 			this->suite[ApproximateEntropy] = new ApproximateEntropyTest(this->mathFunctions);
 			this->suite[Serial] = new SerialTest(this->mathFunctions);
 			this->suite[DiscreteFourierTransform] = new DiscreteFourierTransformTest(this->mathFunctions);
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			for (i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++) {
 				this->selfCreatedTest[i] = true;
 			}
 			this->instantiatedTests = NumberOfTests;
@@ -396,9 +398,9 @@ namespace DiceLockSecurity {
 
 		// Removes all random test of the suite 
 		void RandomTestSuite::RemoveAll(void) {
-			int i;
+			unsigned short int i;
 
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			for (i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++) {
 				if (this->suite[i] != NULL) {
 					if (this->selfCreatedTest[i]) {
 						delete this->suite[i];
@@ -557,27 +559,53 @@ namespace DiceLockSecurity {
 
 		// Tests the BaseCryptoRandomStream untill an error is found with all instantiated random tests and returns the random value
 		bool RandomTestSuite::IsRandom(BaseCryptoRandomStream* stream) {
-			int i;
+			unsigned short int i;
 			
 			this->random = true;
 			i = this->GetFirstTest();
-			while ((i < this->GetMaximumNumberOfTests()) && (this->random)) {
-				if (this->suite[i] != NULL) {
-					this->random &= this->suite[i]->IsRandom(stream);
-					nonRandomTest = this->suite[i]->GetType();
-					if (this->suite[i]->GetError() != NoError) {
-						errorTest = this->suite[i]->GetType();
-						this->numberOfErrors = 1;
+			if ( this->strictRandomnessCheck ) {
+				while ((i < this->GetMaximumNumberOfTests()) && (this->random)) {
+					if (this->suite[i] != NULL) {
+						this->random &= this->suite[i]->IsRandom(stream);
+						if ( ! this->random ) {
+							nonRandomTest = this->suite[i]->GetType();
+							if (this->suite[i]->GetError() != NoError) {
+								errorTest = this->suite[i]->GetType();
+								this->numberOfErrors = 1;
+							}
+						}
 					}
+					i++;
 				}
-				i++;
+			}
+			else {
+				this->ResetUsedTests();
+				while ((i < this->GetMaximumNumberOfTests()) && (this->random)) {
+					if (this->suite[i] != NULL) {
+						if ( stream->GetBitLength() >= this->suite[i]->GetMinimumLength() ) {
+							this->random &= this->suite[i]->IsRandom(stream);
+							this->usedTests[i] = true;
+						}
+						if ( ! this->random ) {
+							nonRandomTest = this->suite[i]->GetType();
+							if (this->suite[i]->GetError() != NoError) {
+								errorTest = this->suite[i]->GetType();
+								this->numberOfErrors = 1;
+							}
+						}
+					}
+					i++;
+				}
+				if ( ! this->GetUsedTestsNumber() ) {
+					this->random = false;
+				}
 			}
 			return this->random;
 		}
 
 		// Tests the BaseCryptoRandomStream with all instantiated random tests and returns the random value
 		bool RandomTestSuite::TestRandom(BaseCryptoRandomStream* stream) {
-			int i;
+			unsigned short int i;
 			
 			this->random = true;
 			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
@@ -602,12 +630,13 @@ namespace DiceLockSecurity {
 			
 		// Initializes all random tests in the suite
 		void RandomTestSuite::Initialize(void) {
-			int i;
+			unsigned short int i;
 			
 			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
 				if (this->suite[i] != NULL) {
 					this->suite[i]->Initialize();
 				}
+				this->usedTests[i] = false;
 			}
 			this->random = false;
 			this->error = NoError;
@@ -617,9 +646,9 @@ namespace DiceLockSecurity {
 
 		// Sets Alpha all random tests in the suite
 		void RandomTestSuite::SetAlpha(double alpha) {
-			int i;
+			unsigned short int i;
 
-			for (i=0; i<NumberOfTests; i++)
+			for (i = 0; i < NumberOfTests; i++)
 				if (this->suite[i] != NULL)
 					this->suite[i]->SetAlpha(alpha);
 		}
@@ -633,16 +662,16 @@ namespace DiceLockSecurity {
 		}
 
 		// Gets the number of Random Tests that contains the suite
-		int RandomTestSuite::GetInstantiatedTests(void) {
+		unsigned short int RandomTestSuite::GetInstantiatedTests(void) {
 
 			return this->instantiatedTests;
 		}
 
 		// Gets the minimum random stream length in bits corresponding
 		// to random number test with higher random stream length
-		unsigned int RandomTestSuite::GetMinimumLength(void) {
-			unsigned int minimumMax;
-			int i;
+		unsigned long int RandomTestSuite::GetMinimumLength(void) {
+			unsigned long int minimumMax;
+			unsigned short int i;
 
 			minimumMax = 0;
 			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
@@ -658,8 +687,8 @@ namespace DiceLockSecurity {
 		// Gets the corresponding random number test 
 		// with higher minimum random stream length in bits 
 		RandomTests RandomTestSuite::GetMinimumLengthRandomTest(void) {
-			unsigned int minimumMax;
-			int i;
+			unsigned long int minimumMax;
+			unsigned short int i;
 			RandomTests randomTest;
 
 			minimumMax = 0;
@@ -710,5 +739,118 @@ namespace DiceLockSecurity {
 
 			return NumberOfTests;
 		}
+
+		/// STRICT RANDOMNESS METHODS
+
+		/// Sets strict randomness checking, if all random tests instantiated in the suite will be verified
+		/// true: all random tests instantiated in the suite will be verified
+		/// false: just random tests that can be checked (stream length larger than random test minimum length) will be verified 
+		void RandomTestSuite::SetStrictRandomnessCheck(bool strictness) {
+
+			this->strictRandomnessCheck = strictness;
+		}
+
+		/// Gets strict randomness checking, if all random tests instantiated in the suite will be verified
+		bool RandomTestSuite::SetStrictRandomnessCheck(void) {
+
+			return this->strictRandomnessCheck;
+		}
+
+		/// USED TEST METHODS WHEN STRICT RANDOMNESS CHECKING IS DISABLED
+
+		/// Gets number of random test that has been used in last random test checking
+		unsigned short int RandomTestSuite::GetUsedTestsNumber(void) {
+			unsigned short int i, number;
+
+			number = 0;
+			for (i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++) {
+				if ( this->usedTests[i] ) {
+					number++;
+				}
+			}
+			return number;
+		}
+
+		/// Gets if enumerated random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedTest(RandomTests randomTest) {
+
+			return this->usedTests[randomTest];
+		}
+
+		/// Gets if frequency random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedFrequencyTest(void) {
+
+			return this->usedTests[Frequency];
+		}
+
+		/// Gets if block frequency random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedBlockFrequencyTest(void) {
+
+			return this->usedTests[BlockFrequency];
+		}
+
+		/// Gets if cumulative sum forward random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedCumulativeSumForwardTest(void) {
+
+			return this->usedTests[CumulativeSumForward];
+		}
+
+		/// Gets if cumulative sum reverse random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedCumulativeSumReverseTest(void) {
+
+			return this->usedTests[CumulativeSumReverse];
+		}
+
+		/// Gets if runs random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedRunsTest(void) {
+
+			return this->usedTests[Runs];
+		}
+
+		/// Gets if longest run of ones random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedLongestRunOfOnesTest(void) {
+
+			return this->usedTests[LongestRunOfOnes];
+		}
+
+		/// Gets if rank random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedRankTest(void) {
+
+			return this->usedTests[Rank];
+		}
+
+		/// Gets if universal random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedUniversalTest(void) {
+
+			return this->usedTests[Universal];
+		}
+
+		/// Gets if approximate entropy random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedApproximateEntropyTest(void) {
+
+			return this->usedTests[ApproximateEntropy];
+		}
+
+		/// Gets if serial random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedSerialTest(void) {
+
+			return this->usedTests[Serial];
+		}
+
+		/// Gets if discrete fourier transform random test has been used in last random test checking
+		bool RandomTestSuite::GetUsedDiscreteFourierTransformTest(void) {
+
+			return this->usedTests[DiscreteFourierTransform];
+		}
+
+		/// Resets all random test "used" signal to false 
+		void RandomTestSuite::ResetUsedTests(void) {
+			unsigned short int i;
+
+			for (i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++) {
+				this->usedTests[i] = false;
+			}
+		}
+
 	}
 }

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright  2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright (C) 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -20,13 +20,9 @@
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
-#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include "universalTest.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {
@@ -36,7 +32,7 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests UniversalTest::test = Universal;
 	// Random Test Class minimum stream length
-	const unsigned int	UniversalTest::minimumLength = 387840;
+	const unsigned long int	UniversalTest::minimumLength = 387840;
 
 	// Maurer's expected value constants
 	const double UniversalTest::expectedValue[17] = {
@@ -100,9 +96,9 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool UniversalTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		int      i, j, p;
-		double   arg, sqrt2, c;
-		long*    T, decRep;
+		unsigned long int i, j, p;
+		double arg, sqrt2, c;
+		unsigned long int* T, decRep;
 
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
@@ -124,9 +120,10 @@ namespace DiceLockSecurity {
 		else if (bitStream->GetBitLength() >= 904960)     this->L = 7;
 		else if (bitStream->GetBitLength() >= 387840)     this->L = 6;
 
-		this->Q = 10*(int)pow((double)2,this->L);
+		T = NULL;
+		this->Q = 10*(int)pow((double)2, (int)this->L);
 		this->K = (int)((long double)floor((double)(bitStream->GetBitLength()/this->L)) - (double)this->Q);	 		    
-		if ((double)this->Q < 10*pow((double)2,this->L)) {
+		if ((double)this->Q < 10*pow((double)2,(int)this->L)) {
 			this->random = false;
 			this->error = LOrQOutOfRange;
 		}
@@ -138,8 +135,8 @@ namespace DiceLockSecurity {
 			this->sigma = c * sqrt(this->varianceResult /(double)this->K);
 			sqrt2 = sqrt((double)2);
 			this->sum = 0.0;
-			p = (int)pow((double)2,this->L);
-			T = (long*) calloc(p, sizeof(long));
+			p = (int)pow((double)2,(int)this->L);
+			T = (unsigned long int*) calloc(p, sizeof(unsigned long int));
 			if (T == NULL) {
 				this->error = InsufficientMemory;
 				this->random = false;
@@ -150,13 +147,13 @@ namespace DiceLockSecurity {
 			for(i = 1; i <= this->Q; i++) {			
 				decRep = 0;
 				for(j = 0; j < this->L; j++) 
-					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2,this->L-1-j);
+					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2, (int)(this->L-1-j));
 				T[decRep] = i;
 			}
 			for(i = this->Q+1; i <= this->Q+this->K; i++) { 	
 				decRep = 0;
 				for(j = 0; j < this->L; j++) 
-					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2,this->L-1-j);
+					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2,(int)(this->L-1-j));
 				this->sum += log((double)(i - T[decRep]))/log((double)2);
 				T[decRep] = i;
 			}
@@ -198,25 +195,25 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int UniversalTest::GetMinimumLength(void) {
+	unsigned long int UniversalTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}
 
 	// Gets the "L" result
-	int UniversalTest::GetL(void) {
+	unsigned long int UniversalTest::GetL(void) {
 
 		return this->L;
 	}
 
 	// Gets the "Q" result
-	int UniversalTest::GetQ(void) {
+	unsigned long int UniversalTest::GetQ(void) {
 
 		return this->Q;
 	}
 
 	// Gets the "K" result
-	int UniversalTest::GetK(void) {
+	unsigned long int UniversalTest::GetK(void) {
 
 		return this->K;
 	}
@@ -252,7 +249,7 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the "bitsDiscarded" result
-	int UniversalTest::GetBitsDiscarded(void) {
+	unsigned long int UniversalTest::GetBitsDiscarded(void) {
 
 		return this->bitsDiscarded;
 	}

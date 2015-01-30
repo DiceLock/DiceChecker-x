@@ -15,6 +15,7 @@ CPP_SRCS += \
 ../source/frequencyTest.cpp \
 ../source/longestRunOfOnesTest.cpp \
 ../source/mathematicalFunctions.cpp \
+../source/physicalCryptoRandomStream.cpp \
 ../source/randomTestSuite.cpp \
 ../source/rankTest.cpp \
 ../source/runsTest.cpp \
@@ -33,6 +34,7 @@ OBJS += \
 ./source/frequencyTest.o \
 ./source/longestRunOfOnesTest.o \
 ./source/mathematicalFunctions.o \
+./source/physicalCryptoRandomStream.o \
 ./source/randomTestSuite.o \
 ./source/rankTest.o \
 ./source/runsTest.o \
@@ -51,6 +53,7 @@ CPP_DEPS += \
 ./source/frequencyTest.d \
 ./source/longestRunOfOnesTest.d \
 ./source/mathematicalFunctions.d \
+./source/physicalCryptoRandomStream.d \
 ./source/randomTestSuite.d \
 ./source/rankTest.d \
 ./source/runsTest.d \
